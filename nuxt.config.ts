@@ -5,7 +5,7 @@ import { existsSync, readFileSync, writeFileSync } from 'fs'
 export default defineNuxtConfig({
   nitro: {
     routes: {
-      '/articles': { swr: 360 },
+      '/articles': { swr: 60 },
       '/blog/**': { static: true },
     },
     hooks: {
