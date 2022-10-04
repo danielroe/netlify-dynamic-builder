@@ -10,6 +10,8 @@ export default defineNuxtConfig({
     },
     hooks: {
       async 'compiled' (nitro) {
+        if (nitro.options.dev) return
+
         const redirectsPath = join(nitro.options.output.publicDir, '_redirects')
         let contents = '/* /.netlify/functions/server 200'
         if (existsSync(redirectsPath)) {
