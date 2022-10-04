@@ -22,9 +22,10 @@ export const handler = async function handler (event, context) {
       (r) => r.builder || r.default.builder
     )
     const ttl = typeof routeOptions.swr === 'number' ? routeOptions.swr : 60
-    return Promise.resolve(builder(_handler)(event as any, context)).then((r) =>
-      routeOptions.swr ? { ...r, ttl } : r
-    )
+    const swrHandler = routeOptions.swr
+      ? (event, context) => _handler(event, context).then(r => ({ ...r, ttl }))
+      : _handler
+    return builder(swrHandler)(event, context)
   }
 
   return _handler(event, context)
